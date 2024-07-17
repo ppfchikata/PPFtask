@@ -1,0 +1,41 @@
+<template>
+    <template if:true={addQuotationFlag}>
+        <article class="slds-card">
+            <div class="modal-title slds-m-vertical_medium slds-text-align_center">商品を追加</div>
+            <lightning-datatable
+                    key-field="Id"
+                    data={GetList}
+                    columns={columnsDefine}
+                    onrowselection={handleRowSelection}>
+            </lightning-datatable>
+            <footer class="slds-card__footer">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <button class="slds-button slds-button_neutral">キャンセル</button>
+                        <lightning-button class="slds-button" label="Next" onclick={handleNext}></lightning-button>
+                    </div>
+                </div>
+            </footer>
+        </article>
+    </template>
+
+    <template if:true={editQuotationFlag}>
+        <article class="slds-card">
+            <div class="modal-title slds-m-vertical_medium slds-text-align_center">選択した見積品目名を編集</div>
+            <lightning-datatable
+                    key-field="Id"
+                    data={products}
+                    columns={columnsDefine}
+                    onrowselection={handleRowSelection}>
+            </lightning-datatable>
+            <footer class="slds-card__footer">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <button class="slds-button slds-button_neutral">キャンセル</button>
+                        <lightning-button class="slds-button" label="Next" onclick={handleNext}></lightning-button>
+                    </div>
+                </div>
+            </footer>
+        </article>
+    </template>
+</template>
