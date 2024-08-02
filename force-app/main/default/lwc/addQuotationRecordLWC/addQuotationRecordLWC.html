@@ -1,18 +1,40 @@
 <template>
     <template if:true={addQuotationFlag}>
         <article class="slds-card">
-            <div class="modal-title slds-m-vertical_medium slds-text-align_center">商品を追加</div>
-            <lightning-datatable
-                    key-field="Id"
-                    data={GetList}
-                    columns={columnsDefine}
-                    onrowselection={handleRowSelection}>
-            </lightning-datatable>
+            <div class="modal-title slds-m-vertical_medium slds-text-align_center">商品を選択</div>
+            <div class="slds-m-horizontal_small">
+                <div class="slds-grid slds-m-bottom_small">
+                    <lightning-combobox
+                        class="slds-col slds-size_1-of-2 pick-list"
+                        name="items1picklist"
+                        label="大項目"
+                        value={items1SelectedValue}
+                        placeholder="Select an option"
+                        options={items1PicklistOptions}
+                        onchange={items1HandleChange}>
+                    </lightning-combobox>
+                    <lightning-combobox
+                        class="slds-col slds-size_1-of-2 pick-list slds-m-left_small"
+                        name="items2picklist"
+                        label="小項目"
+                        value={items2SelectedValue}
+                        placeholder="Select an option"
+                        options={items2PicklistOptions}
+                        onchange={items2HandleChange}>
+                    </lightning-combobox>
+                </div>
+                <lightning-datatable
+                        key-field="Id"
+                        data={GetList}
+                        columns={columnsDefineList}
+                        onrowselection={handleCheckSelection}>
+                </lightning-datatable>
+                <p class="slds-text-color_destructive" if:true={validationErrorFlag}>レコードを1つ以上選択してください。</p>
+            </div>
             <footer class="slds-card__footer">
                 <div class="slds-clearfix">
                     <div class="slds-float_right">
-                        <button class="slds-button slds-button_neutral">キャンセル</button>
-                        <lightning-button class="slds-button" label="Next" onclick={handleNext}></lightning-button>
+                        <lightning-button class="slds-button" label="次へ" onclick={handleNext}></lightning-button>
                     </div>
                 </div>
             </footer>
@@ -21,18 +43,23 @@
 
     <template if:true={editQuotationFlag}>
         <article class="slds-card">
-            <div class="modal-title slds-m-vertical_medium slds-text-align_center">選択した見積品目名を編集</div>
-            <lightning-datatable
-                    key-field="Id"
-                    data={products}
-                    columns={columnsDefine}
-                    onrowselection={handleRowSelection}>
-            </lightning-datatable>
+            <div class="modal-title slds-m-vertical_medium slds-text-align_center">価格と数量を修正</div>
+            <div class="slds-m-horizontal_small">
+                <lightning-datatable
+                        key-field="Id"
+                        data={products}
+                        columns={columnsDefineEdit}
+                        oncellchange={handleCellChange}
+                        draft-values={draftValues}
+                        hide-checkbox-column
+                        onrowaction={handleDeleteSelection}>
+                </lightning-datatable>
+            </div>
             <footer class="slds-card__footer">
                 <div class="slds-clearfix">
                     <div class="slds-float_right">
-                        <button class="slds-button slds-button_neutral">キャンセル</button>
-                        <lightning-button class="slds-button" label="Next" onclick={handleNext}></lightning-button>
+                        <lightning-button class="slds-button" label="キャンセル" onclick={handleBack}></lightning-button>
+                        <lightning-button class="slds-button" label="更新" onclick={handleSave}></lightning-button>
                     </div>
                 </div>
             </footer>
