@@ -166,7 +166,7 @@ export default class AddQuotationRecordLWC extends LightningElement {
     }
 
     // ---チェックボックス選択処理---
-    @api selectedIdList = [];
+    @track selectedIdList = [];
     handleCheckSelection(event) {
         const rowConfig = event.detail.config;
         const selectId = rowConfig.value;
